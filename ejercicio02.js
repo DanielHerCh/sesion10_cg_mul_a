@@ -42,6 +42,10 @@ function init() {
     var axes = new THREE.AxesHelper(20);
     scene.add(axes);
 
+    var mx = new THREE.Matrix4();//matriz x
+    var my = new THREE.Matrix4();//matriz y
+    var mz = new THREE.Matrix4();//matriz z
+
     /*Cubo = [];   // Definir un array unidimensional
     Cubo.push(cubo(4, 4, 4, 0xFFDD00, 'Physical', false));
     Cubo.push(cubo(4, 4, 4, 0xFF0000, 'Standard', false));
@@ -65,14 +69,24 @@ function init() {
     Cubo = [];
     dim = 4;//define las dimensiones del cubo
     Delta = 12;//define una variable para la distancia de desplazamiento
+    angulo = Math.PI/2;//define el ángulo de rotación
     Cubo.push(cubo(dim, dim, dim, 0xFFDD00, 'Physical', false));
-    Cubo.push(cubo(dim, dim, dim, 0xFF0000, 'Standard', false));
-    Cubo.push(cubo(dim, dim, dim, 0x0008f39, 'Physical', false));
+    Cubo.push(cubo(dim, dim, dim, 0x8c004b, 'Physical', false));
+    Cubo.push(cubo(dim, dim, dim, 0x06beff, 'Physical', false));
+
+    //metodos para rotar las matrices en los tres ejes
+    mx.makeRotationX(angulo); //matriz x
+    my.makeRotationY(angulo); //matriz y
+    mz.makeRotationZ(angulo); //matriz z
 
     //metodos para desplazarse por los ejes X, Y y Z
     Cubo[0].translateX(Delta); //eje x
+    Cubo[0].position.applyMatrix4(mx);
     Cubo[1].translateY(Delta); //eje y
+    Cubo[1].position.applyMatrix4(my);
     Cubo[2].translateZ(Delta); //eje z
+    Cubo[2].position.applyMatrix4(mz);
+
 
     //Luz (requerida para el material MeshLambertMaterial)
     light = new THREE.PointLight(0xFFFF00); //  Luz proveniente de un punto en el espacio, 
